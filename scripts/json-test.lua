@@ -5,18 +5,6 @@ local inspect = require('inspect')
 
 math.randomseed(os.time())
 
-function shuffle(paths)
-  local j, k
-  local n = #paths
-
-  for i = 1, n do
-    j, k = math.random(n), math.random(n)
-    paths[j], paths[k] = paths[k], paths[j]
-  end
-
-  return paths
-end
-
 function error(message)
   print(message)
   os.exit(1)
