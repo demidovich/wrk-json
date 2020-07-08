@@ -2,8 +2,8 @@
     "headers": {
         "X-Custom-Header-1": "test 1",
         "X-Custom-Header-2": "test 2"
-      },
-      "requests": [
+    },
+    "requests": [
         {
           "path": "/path-1",
           "body": "some content",
