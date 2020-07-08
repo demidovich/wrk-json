@@ -1,0 +1,92 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+Help()
+{
+    echo ""
+    if [ -n "$1" ]; then
+        echo $1
+        echo ""
+    fi
+    echo "Syntax:"
+    echo ""
+    echo "    stress -s HOST -f FILE [-c|d|t]"
+    echo ""
+    echo "Options:"
+    echo ""
+    echo "    s    schema://hostname[:port]"
+    echo "    f    json file with headers and requests"
+    echo "    c    wrk connections"
+    echo "    d    wrk duration"
+    echo "    t    wrk threads"
+    echo
+    exit 1
+}
+
+while getopts ":s:f:c:d:t" option; do
+    case $option in
+        s)
+            host=$OPTARG
+            ;;
+        f)
+            file=$OPTARG
+            ;;
+        c)
+            wrk_connections=$OPTARG
+            ;;
+        d)
+            wrk_duration=$OPTARG
+            ;;
+        t)
+            wrt_threads=$OPTARG
+            ;;
+        *)
+            Help
+    esac
+done
+
+if [ -z "${host}" ]; then
+    Help "Undefined option \"s\""
+fi
+
+if [ -z "$file" ]; then
+    Help "Undefined option \"f\""
+fi
+
+if [ ! -f "${file}" ]; then
+    Help "File ${file} not exists"
+fi
+
+if [ -z "${wrk_connections}"]; then
+    wrk_connections=1
+fi
+
+if [ -z "${wrt_threads}"]; then
+    wrt_threads=1
+fi
+
+if [ -z "${wrk_duration}"]; then
+    wrk_duration=5
+fi
+
+wrk_duration="${wrk_duration}s"
+
+if [ ! -d ./data ]; then
+    mkdir ./data
+fi
+
+cp $file ./data/test.json
+
+echo ""
+echo "Run command:"
+echo "    wrk -s /scripts/json-test.lua -c $wrk_connections -t $wrt_threads -d $wrk_duration $host"
+echo ""
+
+docker build --tag stress-master .
+
+docker run \
+    -v `pwd`/data:/data \
+    -v `pwd`/scripts:/scripts \
+    --network host \
+    stress-master -s /scripts/json-test.lua -c$wrk_connections -t$wrt_threads -d$wrk_duration $host
