@@ -1,0 +1,18 @@
+{
+    "headers": {
+        "X-Custom-Header-1": "test 1",
+        "X-Custom-Header-2": "test 2"
+      },
+      "requests": [
+        {
+          "path": "/path-1",
+          "body": "some content",
+          "method": "GET"
+        },
+        {
+          "path": "/path-2",
+          "body": "some content",
+          "method": "POST"
+        }
+    ]
+}
