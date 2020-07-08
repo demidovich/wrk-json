@@ -13,6 +13,21 @@
           "path": "/path-2",
           "body": "some content",
           "method": "POST"
+        },
+        {
+          "path": "/path-3",
+          "body": "some content",
+          "method": "POST"
+        },
+        {
+          "path": "/path-4",
+          "body": "some content",
+          "method": "POST"
+        },
+        {
+          "path": "/path-5",
+          "body": "some content",
+          "method": "POST"
         }
     ]
 }

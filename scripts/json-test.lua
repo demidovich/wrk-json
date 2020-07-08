@@ -4,7 +4,6 @@ local cjson_safe = require('cjson.safe')
 local inspect = require('inspect')
 
 math.randomseed(os.time())
-math.random(); math.random(); math.random()
 
 function shuffle(paths)
   local j, k
@@ -44,32 +43,22 @@ function configuration(file)
     error("File " .. file .. " dont contains requests section")
   end
 
+  if #data.requests <= 0 then
+    error("No requests found")
+  end
+
+  print("Found requests: " .. #data.requests)
+
+  for key, val in pairs(data.headers) do
+    print("Found header: " .. key .. " " .. val)
+  end
+
   return data
 end
 
 test = configuration("/data/requests.json")
 
-print(inspect(#test.requests))
-os.exit()
-
-
-if #test.requests <= 0 then
-  error("No requests found")
+request = function()
+  local request_object = test.requests[math.random(#test.requests)]
+  return wrk.format(request_object.method, request_object.path, test.headers, request_object.body)
 end
-
-print("Found " .. #requests .. " requests")
-
--- run requests
-
--- counter = 1
--- request = function()
-
---   local request_object = requests[counter]
-
---   counter = counter + 1
---   if counter > #requests then
---     counter = 1
---   end
-
---   return wrk.format(request_object.method, request_object.path, request_object.headers, request_object.body)
--- end
