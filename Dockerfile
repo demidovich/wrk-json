@@ -7,6 +7,7 @@ RUN apk add \
         lua \
         lua-dev \
         lua-cjson \
+        lua-inspect \
     && ulimit -c -m -s -t unlimited
 
 VOLUME [ "/data" ]
