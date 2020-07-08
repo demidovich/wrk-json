@@ -44,7 +44,7 @@ function configuration(file)
   return data
 end
 
-test = configuration("/data/requests.json")
+test = configuration("/data/test.json")
 
 request = function()
   local request_object = test.requests[math.random(#test.requests)]
