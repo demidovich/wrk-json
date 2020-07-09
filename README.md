@@ -1,11 +1,17 @@
-## stress master
+## wrk json
 
-Docker wrk stress tool container with preinstalled lua. Support description request headers and list of url in the json file.
+This is a dockerized wrk tool with a shell startup scripts and a lua script. Lua script allows you to describe testing urls and request headers in the json file.
 
-Example:
+Usage as standard wrk:
 
 ```
-./stress -s http://localhost:8080 -f ./test-requests.json -c 1 -d 10 -t 1
+./wrk --help
+```
+
+Usage with the requests described in a json file:
+
+```
+./wrk-json -s http://localhost:8080 -f ./test-requests.json -c 1 -d 10 -t 1
 ```
 
 test-requests.json

@@ -80,13 +80,16 @@ cp $file ./data/test.json
 
 echo ""
 echo "Run command:"
-echo "    wrk -s /scripts/json-test.lua -c $wrk_connections -t $wrt_threads -d $wrk_duration $host"
+echo "    wrk -s /scripts/json-requests.lua -c $wrk_connections -t $wrt_threads -d $wrk_duration $host"
 echo ""
 
-docker build --tag stress-master .
+docker build --tag wrk .
+
+echo ""
 
 docker run \
+    --rm \
     -v `pwd`/data:/data \
     -v `pwd`/scripts:/scripts \
     --network host \
-    stress-master -s /scripts/json-test.lua -c$wrk_connections -t$wrt_threads -d$wrk_duration $host
+    wrk -s /scripts/json-requests.lua -c$wrk_connections -t$wrt_threads -d$wrk_duration $host
