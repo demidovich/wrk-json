@@ -48,5 +48,9 @@ test = configuration("/data/test.json")
 
 request = function()
   local request_object = test.requests[math.random(#test.requests)]
-  return wrk.format(request_object.method, request_object.path, test.headers, request_object.body)
+  local body = nil
+  if request_object.body == nil then
+    local body = request_object.body
+  end
+  return wrk.format(request_object.method, request_object.path, test.headers, body)
 end
