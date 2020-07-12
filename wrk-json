@@ -62,7 +62,7 @@ if [ -z "${wrk_connections}"]; then
     wrk_connections=1
 fi
 
-if [ -z "${wrt_threads}"]; then
+if [ -z "${wrk_threads}"]; then
     wrt_threads=1
 fi
 
